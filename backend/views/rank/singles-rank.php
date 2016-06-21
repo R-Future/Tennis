@@ -1,0 +1,21 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: peRFect
+ * Date: 2016/5/28
+ * Time: 0:13
+ */
+/**
+ * @var $data
+ */
+
+$this->title='单打混合排名';
+//var_dump($data);
+$this->registerCssFile('@web/css/table-center.css');
+echo $this->render('_form',['data'=>$data]);
+?>
+
+
+
+
+
