@@ -1,0 +1,25 @@
+.font-bold{
+    font-weight: bold;
+}
+.width-20{
+    width: 20px;
+}
+.width-50{
+    width: 50px;
+}
+.width-70{
+    width: 70px;
+}
+.width-150{
+    width: 150px;
+}
+.height-20{
+    height: 20px!important;
+}
+.text-align-center{
+    text-align: center;
+}
+#loaderModal {
+    top: 40%;
+    left: 15%;
+}

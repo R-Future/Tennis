@@ -34,7 +34,7 @@ class AwMatchScore extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['set', 'player1_score', 'player2_score', 'tie_player1_score', 'tie_player2_score'], 'integer'],
+            [['set', 'player1_score', 'player2_score', 'tie_player1_score', 'tie_player2_score'], 'integer','min'=>0],
             [['match_id'], 'string', 'max' => 255]
         ];
     }

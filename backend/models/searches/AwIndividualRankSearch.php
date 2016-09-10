@@ -18,8 +18,8 @@ class AwIndividualRankSearch extends AwIndividualRank
     public function rules()
     {
         return [
-            [['id', 'player', 'total_points', 'current_rank', 'highest_rank', 'no1_weeks', 'consecutive_no1_weeks', 'longest_no1_weeks', 'margin_bureau','week'], 'integer'],
-            [['rank_type', 'create_at', 'update_at', 'comment'], 'safe'],
+            [['id', 'player', 'total_points', 'current_rank', 'rank_lift', 'win_matches', 'total_matches', 'next_week_deduct_point', 'highest_rank', 'no1_weeks', 'consecutive_no1_weeks', 'longest_no1_weeks', 'margin_bureau','year','week'], 'integer'],
+            [['rank_type', 'highest_rank_start_at', 'create_at', 'update_at', 'comment'], 'safe'],
         ];
     }
 
@@ -60,12 +60,18 @@ class AwIndividualRankSearch extends AwIndividualRank
             'player' => $this->player,
             'total_points' => $this->total_points,
             'current_rank' => $this->current_rank,
+            'rank_lift' => $this->rank_lift,
+            'win_matches' => $this->win_matches,
+            'total_matches' => $this->total_matches,
+            'next_week_deduct_point' => $this->next_week_deduct_point,
             'highest_rank' => $this->highest_rank,
             'no1_weeks' => $this->no1_weeks,
             'consecutive_no1_weeks' => $this->consecutive_no1_weeks,
             'longest_no1_weeks' => $this->longest_no1_weeks,
             'margin_bureau' => $this->margin_bureau,
+            'year' => $this->year,
             'week' => $this->week,
+            'highest_rank_start_at' => $this->highest_rank_start_at,
             'create_at' => $this->create_at,
             'update_at' => $this->update_at,
         ]);

@@ -34,8 +34,8 @@
     margin-top: 50px;
 }
 .rank-information > div{
-    height: 40px;
-    margin:5px 0 0 5px;
+    height: 27px;
+    margin:1px 0 0 5px;
 }
 /*球员基本信息*/
 .basic-information{
@@ -46,38 +46,12 @@
     float: left;
 }
 /*单打比赛信息*/
-.singles-match{
+.active-record{
     margin: 10px 0 0 185px;
     width: 66.1%;
     height: 230px;
     border: solid 1px tomato;
     float: left;
-}
-.singles-match > label{
-    display: block;
-    text-align: center;
-    /*border: solid 1px;*/
-    background-color: tomato;
-}
-.singles-match > .match-record{
-    height: 200px;
-    width: 100%;
-    overflow: scroll;
-    float: left;
-}
-/*活动信息*/
-.player-information > .active-record{
-    margin:10px 0 0 185px;
-    width: 33%;
-    height: 230px;
-    border: solid 1px tomato;
-    float: left;
-}
-/*.player-information > .active-record:first-child{*/
-    /*margin-left: 185px;*/
-/*}*/
-.player-information > .active-record:last-child{
-    margin-left: 1px;
 }
 .active-record > label{
     display: block;
@@ -91,3 +65,29 @@
     overflow: scroll;
     float: left;
 }
+/*!*活动信息*!*/
+/*.player-information > .active-record{*/
+    /*margin:10px 0 0 185px;*/
+    /*width: 33%;*/
+    /*height: 230px;*/
+    /*border: solid 1px tomato;*/
+    /*float: left;*/
+/*}*/
+/*!*.player-information > .active-record:first-child{*!*/
+    /*!*margin-left: 185px;*!*/
+/*!*}*!*/
+/*.player-information > .active-record:last-child{*/
+    /*margin-left: 1px;*/
+/*}*/
+/*.active-record > label{*/
+    /*display: block;*/
+    /*text-align: center;*/
+    /*!*border: solid 1px;*!*/
+    /*background-color: tomato;*/
+/*}*/
+/*.active-record > .record{*/
+    /*height: 200px;*/
+    /*width: 100%;*/
+    /*overflow: scroll;*/
+    /*float: left;*/
+/*}*/

@@ -12,5 +12,5 @@
 $this->title='双打个人排名';
 //var_dump($players);
 $this->registerCssFile('@web/css/table-center.css');
-echo $this->render('_form',['data'=>$data]);
+echo $this->render('_indform',['data'=>$data]);
 ?>

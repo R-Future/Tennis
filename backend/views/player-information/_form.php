@@ -135,11 +135,11 @@ use common\models\AwCity;
 
     <div class="form-group">
         <div class="col-lg-offset-2 col-xs-3">
-            <?= $form->field($model, 'retired')->dropDownList([ 'no' => 'No', 'yes' => 'Yes',]) ?>
+            <?= $form->field($model, 'retired')->checkbox() ?>
         </div>
 
         <div class="col-lg-offset-2 col-xs-3">
-            <?= $form->field($model, 'comment')->textInput(['maxlength' => true])?>
+            <?= $form->field($model, 'comment')->textarea(['maxlength' => true])?>
         </div>
     </div>
 

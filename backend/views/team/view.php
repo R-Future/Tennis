@@ -36,6 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label'=>'队友2',
                 'value'=>$model->player0->name
             ],
+            'team_type',
             'start_at',
             'create_at',
             'update_at',

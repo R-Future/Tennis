@@ -57,7 +57,7 @@ class AwMatchScoreSearch extends AwMatchScore
 
         $query->andFilterWhere([
             'id' => $this->id,
-//            'match_id' => is_null($match_id)?$this->match_id:$match_id,
+            'match_id' => is_null($match_id)?$this->match_id:$match_id,
             'set' => $this->set,
             'player1_score' => $this->player1_score,
             'player2_score' => $this->player2_score,
@@ -65,7 +65,7 @@ class AwMatchScoreSearch extends AwMatchScore
             'tie_player2_score' => $this->tie_player2_score,
         ]);
 
-        $query->andFilterWhere(['like', 'match_id', is_null($match_id)?$this->match_id:$match_id]);
+        //$query->andFilterWhere(['like', 'match_id', is_null($match_id)?$this->match_id:$match_id]);
 
         return $dataProvider;
     }

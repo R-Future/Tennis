@@ -9,6 +9,16 @@ use common\models\AwTournament;
 /* @var $this yii\web\View */
 /* @var $model common\models\AwSinglesMatch */
 /* @var $form yii\widgets\ActiveForm */
+/**
+ * 男单 -- 1
+ * 女单 -- 2
+ * 男双 -- 3
+ * 女双 -- 4
+ * 混双 -- 5
+ * 双打个人 -- 6
+ * 混单 -- 7
+ * 双打 -- 8
+ * */
 ?>
 
 <div class="aw-singles-match-form">
@@ -39,7 +49,7 @@ use common\models\AwTournament;
     }
     ?>
 
-    <?= $form->field($model, 'entry_project')->dropDownList([ '混单' => '混单', '女单' => '女单', '男单' => '男单', ]) ?>
+    <?= $form->field($model, 'entry_project')->dropDownList([ '7' => '混单', '2' => '女单', '1' => '男单', ]) ?>
 
     <?= $form->field($model, 'field_type')->dropDownList([ '硬地' => '硬地', '红土' => '红土', '草地' => '草地',  ]) ?>
 
@@ -59,11 +69,15 @@ use common\models\AwTournament;
 
     <?= $form->field($model, 'scores')->textInput(['value'=>'s'.time()]) ?>
 
-    <?= $form->field($model, 'win_loss')->dropDownList([ '胜' => '胜', '负' => '负', '平' => '平', ]) ?>
+    <?= $form->field($model, 'win_loss')->dropDownList([ '1' => '胜', '-1' => '负', '0' => '平', ]) ?>
 
     <?= $form->field($model, 'player_point')->textInput() ?>
 
     <?= $form->field($model, 'opponent_point')->textInput() ?>
+
+    <?= $form->field($model, 'player_challenger')->checkbox() ?>
+
+    <?= $form->field($model, 'opponent_challenger')->checkbox() ?>
 
     <?= $form->field($model, 'player_quit')->checkbox() ?>
 

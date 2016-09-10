@@ -43,6 +43,10 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'loser_point') ?>
 
+    <?php // echo $form->field($model, 'player_challenger') ?>
+
+    <?php // echo $form->field($model, 'opponent_challenger') ?>
+
     <?php // echo $form->field($model, 'player_quit') ?>
 
     <?php // echo $form->field($model, 'opponent_quit') ?>

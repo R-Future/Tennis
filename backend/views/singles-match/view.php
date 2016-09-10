@@ -63,6 +63,8 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'player_point',
             'opponent_point',
+            'player_challenger',
+            'opponent_challenger',
             'player_quit',
             'opponent_quit',
             'is_invalidated',

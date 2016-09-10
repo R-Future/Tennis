@@ -33,6 +33,12 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'margin_bureau') ?>
 
+    <?php // echo $form->field($model, 'year') ?>
+
+    <?php // echo $form->field($model, 'week') ?>
+
+    <?php // echo $form->field($model, 'highest_rank_start_at') ?>
+
     <?php // echo $form->field($model, 'create_at') ?>
 
     <?php // echo $form->field($model, 'update_at') ?>

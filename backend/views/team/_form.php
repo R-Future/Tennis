@@ -17,6 +17,8 @@ use common\base\MyFunction;
 
     <?= $form->field($model, 'player2')->dropDownList(AwPlayerInformation::find()->select(['name','id'])->indexBy('id')->column())?>
 
+    <?= $form->field($model, 'team_type')->dropDownList(['3'=>'男双','4'=>'女双','5'=>'混双'])?>
+
     <?= $form->field($model, 'start_at')->textInput(['value'=>MyFunction::getCurrentDate()]) ?>
 
     <?= MyFunction::timeForm($model)?>

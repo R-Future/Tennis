@@ -19,7 +19,7 @@ class AwSinglesMatchSearch extends AwSinglesMatch
     {
         return [
             [['id', 'player', 'opponent', 'match_place', 'tournament', 'round', 'sets', 'player_point', 'opponent_point'], 'integer'],
-            [['player_quit', 'opponent_quit', 'is_invalidated'],'boolean'],
+            [['player_challenger','opponent_challenger','player_quit', 'opponent_quit', 'is_invalidated'],'boolean'],
             [['match_time', 'entry_project', 'field_type', 'scores', 'win_loss', 'create_at', 'update_at', 'comment'], 'safe'],
         ];
     }
@@ -67,6 +67,8 @@ class AwSinglesMatchSearch extends AwSinglesMatch
             'sets' => $this->sets,
             'player_point' => $this->player_point,
             'opponent_point' => $this->opponent_point,
+            'player_challenger' => $this->player_challenger,
+            'opponent_challenger' => $this->opponent_challenger,
             'player_quit' => $this->player_quit,
             'opponent_quit' => $this->opponent_quit,
             'is_invalidated' => $this->is_invalidated,

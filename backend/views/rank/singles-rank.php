@@ -12,7 +12,7 @@
 $this->title='单打混合排名';
 //var_dump($data);
 $this->registerCssFile('@web/css/table-center.css');
-echo $this->render('_form',['data'=>$data]);
+echo $this->render('_indform',['data'=>$data]);
 ?>
 
 

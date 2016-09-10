@@ -10,6 +10,7 @@ use Yii;
  * @property integer $id
  * @property integer $player1
  * @property integer $player2
+ * @property integer $team_type
  * @property string $start_at
  * @property string $create_at
  * @property string $update_at
@@ -37,7 +38,8 @@ class AwTeam extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id','player1','player2'], 'integer'],
+            [['id','player1','player2', 'team_type'], 'integer'],
+            [['team_type'], 'min'=>2, 'max'=>4],
             [['start_at', 'create_at', 'update_at'], 'safe'],
             [['comment'], 'string', 'max' => 255]
         ];
@@ -52,6 +54,7 @@ class AwTeam extends \yii\db\ActiveRecord
             'id' => 'ID',
             'player1' => 'player1',
             'player2' => 'player2',
+            'team_type' => '组合类型（3-男双/4-女双/5-混双）',
             'start_at' => '组合开始时间',
             'create_at' => '创建时间',
             'update_at' => '更新时间',

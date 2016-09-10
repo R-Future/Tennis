@@ -21,6 +21,9 @@ const DOUBLES='双打';
 const WOMEN_SINGLE='女单';
 const MEN_SINGLE='男单';
 const DOUBLES_INDIVIDUAL="双打个人";
+const MEN_DOUBLE='男双';
+const WOMEN_DOUBLE='女双';
+const MIXED_DOUBLE='混双';
 const NO_DATA='无比赛数据';
 class RankController extends Controller{
 
@@ -30,15 +33,17 @@ class RankController extends Controller{
      */
     public function actionSinglesRank(){
         $year=date('Y');
+        $lastYear=$year-1;
         $week=date('W');
         //获取当前赛季每个球员的单打周积分
-        $players_arr=AwSinglePoint::find()->
-        innerJoin('aw_player_information','aw_single_point.player=aw_player_information.id')->
-        select(['player','group', 'name', 'gender', 'total_matches','win_matches','margin_bureau','point','aw_single_point.year','aw_single_point.week'])->
-        where(['and',['or',['and','year'=>$year-1,['>','week',$week]],['and','year'=>$year,['<=','week',$week]]],['aw_single_point.is_invalidated'=>false]])->
-        orderBy('player')->asArray()->all();
-        
-        return $this->render('singles-rank',['data'=>MyFunction::rank($players_arr,MIXED)]);
+        $query=<<<EOT
+SELECT `player`,`group`, `name`, `gender`, `total_matches`,`win_matches`,`margin_bureau`,`point`,`year`,`week` 
+FROM `aw_single_point` INNER JOIN `aw_player_information` ON aw_player_information.id=aw_single_point.player 
+WHERE ((year={$lastYear} AND week>{$week}) OR (year={$year} AND week<={$week})) AND aw_single_point.is_invalidated=0 
+ORDER BY aw_single_point.player, aw_single_point.year DESC
+EOT;
+        $players_arr=AwSinglePoint::findBySql($query)->asArray()->all();
+        return $this->render('singles-rank',['data'=>MyFunction::IndividualRank($players_arr,MyFunction::EntryProject()[MIXED])]);
     }
 
     /**
@@ -47,13 +52,17 @@ class RankController extends Controller{
      */
     public function actionWomenRank(){
         $year=date('Y');
+        $lastYear=$year-1;
         $week=date('W');
-        $players_arr=AwWomenIndividualPoint::find()->
-        innerJoin('aw_player_information','aw_women_individual_point.player=aw_player_information.id')->
-        select(['player', 'group','name','gender','total_matches','win_matches','margin_bureau','point','aw_women_individual_point.year','aw_women_individual_point.week'])->
-        where(['and',['or',['and','year'=>$year-1,['>','week',$week]],['and','year'=>$year,['<=','week',$week]]],['aw_women_individual_point.is_invalidated'=>false]])->
-        orderBy('player')->asArray()->all();
-        return $this->render('women-rank',['data'=>MyFunction::rank($players_arr,WOMEN_SINGLE)]);
+        //查询本赛季个人周积分
+        $query=<<<EOT
+SELECT `player`,`group`, `name`, `gender`, `total_matches`,`win_matches`,`margin_bureau`,`point`,`year`,`week` 
+FROM `aw_women_individual_point` INNER JOIN `aw_player_information` ON aw_player_information.id=aw_women_individual_point.player 
+WHERE ((year={$lastYear} AND week>{$week}) OR (year={$year} AND week<={$week})) AND aw_women_individual_point.is_invalidated=0 
+ORDER BY aw_women_individual_point.player, aw_women_individual_point.year DESC
+EOT;
+        $players_arr=AwWomenIndividualPoint::findBySql($query)->asArray()->all();
+        return $this->render('women-rank',['data'=>MyFunction::IndividualRank($players_arr,MyFunction::EntryProject()[WOMEN_SINGLE])]);
     }
 
     /**
@@ -62,13 +71,17 @@ class RankController extends Controller{
      */
     public function actionMenRank(){
         $year=date('Y');
+        $lastYear=$year-1;
         $week=date('W');
-        $players_arr=AwMenIndividualPoint::find()->
-        innerJoin('aw_player_information','aw_men_individual_point.player=aw_player_information.id')->
-        select(['player','group','name','gender','total_matches','win_matches','margin_bureau','point','aw_men_individual_point.year','aw_men_individual_point.week'])->
-        where(['and',['or',['and','year'=>$year-1,['>','week',$week]],['and','year'=>$year,['<=','week',$week]]],['aw_men_individual_point.is_invalidated'=>false]])->
-        orderBy('player')->asArray()->all();
-        return $this->render('men-rank',['data'=>MyFunction::rank($players_arr, MEN_SINGLE)]);
+        //查询本赛季个人周积分
+        $query=<<<EOT
+SELECT `player`,`group`, `name`, `gender`, `total_matches`,`win_matches`,`margin_bureau`,`point`,`year`,`week` 
+FROM `aw_men_individual_point` INNER JOIN `aw_player_information` ON aw_player_information.id=aw_men_individual_point.player 
+WHERE ((year={$lastYear} AND week>{$week}) OR (year={$year} AND week<={$week})) AND aw_men_individual_point.is_invalidated=0 
+ORDER BY aw_men_individual_point.player, aw_men_individual_point.year DESC
+EOT;
+        $players_arr=AwMenIndividualPoint::findBySql($query)->asArray()->all();
+        return $this->render('men-rank',['data'=>MyFunction::IndividualRank($players_arr, MyFunction::EntryProject()[MEN_SINGLE])]);
     }
 
     /**
@@ -77,13 +90,17 @@ class RankController extends Controller{
      */
     public function actionDoublesIndividualRank(){
         $year=date('Y');
+        $lastYear=$year-1;
         $week=date('W');
-        $players_arr=AwDoubleIndividualPoint::find()->
-        innerJoin('aw_player_information','aw_double_individual_point.player=aw_player_information.id')->
-        select(['player', 'group','name','gender','total_matches','win_matches','margin_bureau','point','aw_double_individual_point.year','aw_double_individual_point.week'])->
-        where(['and',['or',['and','year'=>$year-1,['>','week',$week]],['and','year'=>$year,['<=','week',$week]]],['aw_double_individual_point.is_invalidated'=>false]])->
-        orderBy('player')->asArray()->all();
-        return $this->render('doubles-individual-rank',['data'=>MyFunction::rank($players_arr,DOUBLES_INDIVIDUAL)]);
+        //查询本赛季个人周积分
+        $query=<<<EOT
+SELECT `player`,`group`, `name`, `gender`, `total_matches`,`win_matches`,`margin_bureau`,`point`,`year`,`week` 
+FROM `aw_double_individual_point` INNER JOIN `aw_player_information` ON aw_player_information.id=aw_double_individual_point.player 
+WHERE ((year={$lastYear} AND week>{$week}) OR (year={$year} AND week<={$week})) AND aw_double_individual_point.is_invalidated=0 
+ORDER BY aw_double_individual_point.player, aw_double_individual_point.year DESC
+EOT;
+        $players_arr=AwDoubleIndividualPoint::findBySql($query)->asArray()->all();
+        return $this->render('doubles-individual-rank',['data'=>MyFunction::IndividualRank($players_arr,MyFunction::EntryProject()[DOUBLES_INDIVIDUAL])]);
     }
     
     /**
@@ -92,63 +109,107 @@ class RankController extends Controller{
      */
     public function actionDoublesRank(){
         $year=date('Y');
+        $lastYear=$year-1;
         $week=date('W');
-        $teams_arr=AwDoublePoint::find()->
-        innerJoin('aw_team','aw_double_point.team=aw_team.id')->
-        select(['team','player1','player2','total_matches','win_matches','margin_bureau','point','aw_double_point.year','aw_double_point.week'])->
-        where(['and',['or',['and','year'=>$year-1,['>','week',$week]],['and','year'=>$year,['<=','week',$week]]],['aw_double_point.is_invalidated'=>false]])->
-        orderBy('team')->asArray()->all();
-        //计算每对当前赛季的总积分
-        $teams[]=array();
-        $count=count($teams_arr);
-        $j=0;
-        for($i=0;$i<$count;$i++){
-            if(empty($teams[$j])){
-                $teams[$j]=$teams_arr[$i];
-                $teams[$j]=array_merge($teams[$j],['active'=>0,'deduct_mark'=>0]);
-            }else{
-                if($teams[$j]['team']=$teams_arr[$i]['team']){
-                    $teams[$j]['total_matches']+=$teams_arr[$i]['total_matches'];
-                    $teams[$j]['win_matches']+=$teams_arr[$i]['win_matches'];
-                    $teams[$j]['point']+=$teams_arr[$i]['point'];
-                    $teams[$j]['margin_bureau']+=$teams_arr[$i]['margin_bureau'];
-                }else{
-                    $j++;
-                    $teams[$j]=$teams_arr[$i];
-                    $teams[$j]=array_merge($teams[$j],['active'=>0,'deduct_mark'=>0]);
-                }
-            }
-            //计算当前赛季参赛次数
-            if($teams_arr[$i]['year']==$year){
-                $teams[$j]['active']++;
-            }
-            //计算下周要扣除的积分
-            if($teams_arr[$i]['year']==$year-1&&$teams_arr[$i]['week']==$week+1){
-                $teams[$j]['deduct_mark']=$teams_arr[$i]['point'];
-            }
-        }
-        //计算每个球员当前赛季胜率
-        if(!empty($teams[0])){
-            foreach($teams as $index => $team){
-                //查询数据库时，若只有一条数据则返回一维数组，若有多条数据则返回二维数组
-                $player1=AwPlayerInformation::find()->select(['name','gender'])->where(['id'=>$team['player1']])->asArray()->one();
-                $player2=AwPlayerInformation::find()->select(['name','gender'])->where(['id'=>$team['player2']])->asArray()->one();
-                $win_rate=number_format($team['win_matches']/$team['total_matches']*100,2);
+        //查询本赛季组合周积分
+        $query=<<<EOT
+SELECT `team`,`team_type`,`player1`, `player2`, `total_matches`,`win_matches`,`margin_bureau`,`point`,`year`,`week` 
+FROM `aw_double_point` INNER JOIN `aw_team` ON aw_team.id=aw_double_point.team
+WHERE ((year={$lastYear} AND week>{$week}) OR (year={$year} AND week<={$week})) AND aw_double_point.is_invalidated=0 
+ORDER BY aw_double_point.team, aw_double_point.year DESC
+EOT;
+        $teams_arr=AwDoublePoint::findBySql($query)->asArray()->all();
+        return $this->render('doubles-rank',['data'=>MyFunction::TeamRank($teams_arr,MyFunction::EntryProject()[DOUBLES])]);
+    }
 
-                if($player1['gender']=='男'&&$player2['gender']=='男'){
-                    $team_type=['team_type'=>'男双'];
-                }elseif($player1['gender']=='女'&&$player2['gender']=='女'){
-                    $team_type=['team_type'=>'女双'];
-                }else{
-                    $team_type=['team_type'=>'混双'];
-                }
+    /**
+     * @return string
+     * 男双排名
+     */
+    public function actionMenDoubleRank(){
+        $year=date('Y');
+        $lastYear=$year-1;
+        $week=date('W');
+        //查询本赛季组合周积分
+        $query=<<<EOT
+SELECT `team`,`team_type`,`player1`, `player2`, `total_matches`,`win_matches`,`margin_bureau`,`point`,`year`,`week` 
+FROM `aw_men_double_point` INNER JOIN `aw_team` ON aw_team.id=aw_men_double_point.team
+WHERE ((year={$lastYear} AND week>{$week}) OR (year={$year} AND week<={$week})) AND aw_men_double_point.is_invalidated=0 
+ORDER BY aw_men_double_point.team, aw_men_double_point.year DESC
+EOT;
+        $teams_arr=AwDoublePoint::findBySql($query)->asArray()->all();
+        return $this->render('men-double-rank',['data'=>MyFunction::TeamRank($teams_arr,MyFunction::EntryProject()[MEN_DOUBLE])]);
+    }
 
-                $teams[$index]=array_merge($team,['player1_name'=>$player1['name']],['player2_name'=>$player2['name']],$team_type,['win_rate'=>$win_rate]);
-            }
-            $teams=MyFunction::rankBubbleSort($teams);
-            return $this->render('doubles-rank',['teams'=>$teams]);
-        }else{
-            return $this->render('doubles-rank',['no_data'=>NO_DATA]);
-        }
+    /**
+     * @return string
+     * 女双排名
+     */
+    public function actionWomenDoubleRank(){
+        $year=date('Y');
+        $lastYear=$year-1;
+        $week=date('W');
+        //查询本赛季组合周积分
+        $query=<<< EOT
+SELECT `team`,`team_type`,`player1`, `player2`, `total_matches`,`win_matches`,`margin_bureau`,`point`,`year`,`week` 
+FROM `aw_women_double_point` INNER JOIN `aw_team` ON aw_team.id=aw_women_double_point.team
+WHERE ((year={$lastYear} AND week>{$week}) OR (year={$year} AND week<={$week})) AND aw_women_double_point.is_invalidated=0 
+ORDER BY aw_women_double_point.team, aw_women_double_point.year DESC
+EOT;
+        $teams_arr=AwDoublePoint::findBySql($query)->asArray()->all();
+        return $this->render('men-double-rank',['data'=>MyFunction::TeamRank($teams_arr,MyFunction::EntryProject()[WOMEN_DOUBLE])]);
+    }
+
+    /**
+     * @return string
+     * 混双排名
+     */
+    public function actionMixedDoubleRank(){
+        $year=date('Y');
+        $lastYear=$year-1;
+        $week=date('W');
+        //查询本赛季组合周积分
+        $query=<<< EOT
+SELECT `team`,`team_type`,`player1`, `player2`, `total_matches`,`win_matches`,`margin_bureau`,`point`,`year`,`week` 
+FROM `aw_mixed_double_point` INNER JOIN `aw_team` ON aw_team.id=aw_mixed_double_point.team
+WHERE ((year={$lastYear} AND week>{$week}) OR (year={$year} AND week<={$week})) AND aw_mixed_double_point.is_invalidated=0 
+ORDER BY aw_mixed_double_point.team, aw_mixed_double_point.year DESC
+EOT;
+        $teams_arr=AwDoublePoint::findBySql($query)->asArray()->all();
+        return $this->render('mixed-double-rank',['data'=>MyFunction::TeamRank($teams_arr,MyFunction::EntryProject()[MIXED_DOUBLE])]);
+    }
+
+    /**
+     * @return string
+     * the rank of singles in this season
+     */
+    public function actionSeasonSinglesRank(){
+        $lastYear=date('Y')-1;
+        $startDateTime="{$lastYear}-12-01 00:00:00";
+        $query=<<< EOT
+SELECT `player`,`group`, `name`, `gender`, `total_matches`,`win_matches`,`margin_bureau`,`point`,`year` 
+FROM aw_single_point INNER JOIN aw_player_information ON aw_single_point.player=aw_player_information.id
+WHERE aw_single_point.is_invalidated=0 AND (UNIX_TIMESTAMP(aw_single_point.create_at) BETWEEN UNIX_TIMESTAMP('{$startDateTime}') AND UNIX_TIMESTAMP(NOW())) 
+ORDER BY `player`, `year`
+EOT;
+        $players_arr=AwSinglePoint::findBySql($query)->asArray()->all();
+        return $this->render('season-singles-rank',['data'=>MyFunction::SeasonIndividualRank($players_arr,MyFunction::EntryProject()[MIXED])]);
+    }
+
+    /**
+     * @return string
+     * the rank of doubles-individuals in this season
+     */
+    public function actionSeasonDoublesIndividualRank(){
+        $lastYear=date('Y')-1;
+        $startDateTime="{$lastYear}-12-01 00:00:00";
+        $query=<<< EOT
+SELECT `player`,`group`, `name`, `gender`, `total_matches`,`win_matches`,`margin_bureau`,`point`,`year` 
+FROM aw_double_individual_point INNER JOIN aw_player_information ON aw_double_individual_point.player=aw_player_information.id 
+WHERE aw_double_individual_point.is_invalidated=0 AND (UNIX_TIMESTAMP(aw_double_individual_point.create_at) BETWEEN UNIX_TIMESTAMP('{$startDateTime}') AND UNIX_TIMESTAMP(NOW())) 
+ORDER BY `player`, `year`
+EOT;
+        $players_arr=AwSinglePoint::findBySql($query)->asArray()->all();
+        return $this->render('season-singles-rank',['data'=>MyFunction::SeasonIndividualRank($players_arr,MyFunction::EntryProject()[DOUBLES_INDIVIDUAL])]);
     }
 }

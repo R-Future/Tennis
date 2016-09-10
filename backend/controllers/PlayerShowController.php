@@ -16,6 +16,18 @@ use common\models\AwSinglesMatch;
 use common\models\AwTeam;
 use common\models\AwDoublesMatch;
 use common\models\AwActive;
+use common\base\MyFunction;
+
+/**
+ * 男单 -- 1
+ * 女单 -- 2
+ * 男双 -- 3
+ * 女双 -- 4
+ * 混双 -- 5
+ * 双打个人 -- 6
+ * 混单 -- 7
+ * 双打 -- 8
+ * */
 
 class PlayerShowController extends Controller{
     /**
@@ -34,7 +46,7 @@ class PlayerShowController extends Controller{
         //球员信息
         $player=AwPlayerInformation::find()->where(['aw_player_information.id'=>$id])->asArray()->one();
         //排名
-        $rank=AwIndividualRank::find()->where(['player'=>$id,'rank_type'=>'混单'])->asArray()->one();
+        $rank=AwIndividualRank::find()->where(['player'=>$id,'rank_type'=>MyFunction::EntryProject()['混单']])->asArray()->one();
         //活动
         $actives=AwIndividualActive::find()->innerJoin('aw_active','aw_active.id=aw_individual_active.active')->
                 where(['player' => $id])->select(['aw_active.time','aw_active.place','aw_active.active'])->asArray()->all();
@@ -43,17 +55,13 @@ class PlayerShowController extends Controller{
             $actives[$index]=array_merge($active,array('place'=>$place));
         }
         //单打比赛
-        $singles_match=AwSinglesMatch::find()->where(['or','player'=>$id,'opponent'=>$id])->orderBy('match_time desc')->all();
-//        $i=0;
-//        $singles=array();
-//        foreach ($singles_match as $match){
-//
-//        }
+        $singles_match=AwSinglesMatch::find()->where(['player'=>$id])->orderBy('match_time desc')->all();
+
         //双打比赛
-        $teams=AwTeam::find()->where(['or','player1'=>$id,'player2'=>$id])->select('id')->asArray()->all();
+        $teams=AwTeam::find()->where(['player1'=>$id])->orWhere(['player2'=>$id])->select('id')->asArray()->all();
         $doubles_match=array();
         foreach($teams as $team){
-            $tmp=AwDoublesMatch::find()->where(['or','team1'=>$team['id'],'team2'=>$team['id']])->orderBy('match_time desc')->all();
+            $tmp=AwDoublesMatch::find()->where(['team1'=>$team['id']])->orderBy('match_time desc')->all();
             $doubles_match=array_merge($doubles_match,$tmp);
         }
         return $this->renderPartial('detail',['player'=>$player,'rank'=>$rank,'actives'=>$actives,'singles'=>$singles_match,'doubles'=>$doubles_match]);

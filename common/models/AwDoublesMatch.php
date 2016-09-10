@@ -12,13 +12,13 @@ use Yii;
  * @property integer $team2
  * @property string $match_time
  * @property integer $match_place
- * @property string $entry_project
+ * @property integer $entry_project
  * @property string $field_type
  * @property integer $tournament
  * @property integer $round
  * @property integer $sets
  * @property string $scores
- * @property string $win_loss
+ * @property integer $win_loss
  * @property integer $team1_point
  * @property integer $team2_point
  * @property boolean $team1_quit
@@ -51,10 +51,14 @@ class AwDoublesMatch extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['team1', 'team2', 'match_place', 'tournament', 'round', 'sets', 'team1_point', 'team2_point'], 'integer'],
+            [['team1', 'team2', 'match_place', 'tournament', 'round', 'team1_point', 'team2_point'], 'integer'],
+            [['entry_project'], 'integer', 'max'=>7, 'min'=>0],
+            [['win_loss'], 'integer', 'max'=>1, 'min'=>-1],
+            [['sets'], 'integer', 'max'=>5, 'min'=>1],
             [['team1_quit','team2_quit','is_invalidated'],'boolean'],
             [['match_time', 'create_at', 'update_at'], 'safe'],
-            [['entry_project', 'field_type', 'win_loss'], 'string'],
+            [['match_time'], 'date', 'format'=>'php:Y-m-d'],
+            [['field_type'], 'string'],
             [['scores', 'comment'], 'string', 'max' => 255]
         ];
     }
@@ -70,13 +74,13 @@ class AwDoublesMatch extends \yii\db\ActiveRecord
             'team2' => 'Team2',
             'match_time' => '比赛时间',
             'match_place' => '比赛地点',
-            'entry_project' => '比赛项目',
+            'entry_project' => '比赛项目（3-男双/4-女双/5-混双/8-双打）',
             'field_type' => '场地类型',
             'tournament' => '赛事类型',
-            'round' => '轮次',
+            'round' => '轮次（0-小组赛/32-三十二强/16-十六强/8-八强/4-四强/2-决赛）',
             'sets' => '盘数',
             'scores' => '比分',
-            'win_loss' => '胜负',
+            'win_loss' => '胜负（1-胜/-1-负/0-平）',
             'team1_point' => '胜者积分',
             'team2_point' => '败者积分',
             'team1_quit' => 'team1退赛',

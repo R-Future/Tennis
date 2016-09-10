@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'tournament') ?>
 
-    <?= $form->field($model, 'point_type') ?>
+    <?= $form->field($model, 'round') ?>
 
     <?= $form->field($model, 'winner_point') ?>
 

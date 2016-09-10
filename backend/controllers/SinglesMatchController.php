@@ -34,7 +34,7 @@ class SinglesMatchController extends Controller
     {
         $searchModel = new AwSinglesMatchSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->pagination->pageSize=10;
+        $dataProvider->pagination->pageSize=30;
 
         return $this->render('index', [
             'searchModel' => $searchModel,

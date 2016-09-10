@@ -28,6 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //            'id',
             'player1',
             'player2',
+            'team_type',
             'start_at',
             'create_at',
             // 'update_at',

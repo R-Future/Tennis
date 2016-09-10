@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'tournament',
-            'point_type',
+            'round',
             'winner_point',
             'loser_point',
             // 'create_at',

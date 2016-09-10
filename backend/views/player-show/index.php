@@ -13,6 +13,7 @@
 $this->title='球员个人信息';
 //$this->registerCssFile('@web/css/table-center.css');
 $this->registerCssFile('@web/css/player-show.css');
+$this->registerCssFile('../../common/css/base.css');
 ?>
 <div class="form-group">
     <div class="col-lg-offset-4 col-xs-2">

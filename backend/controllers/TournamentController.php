@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\AwTournament;
+use common\models\AwPointType;
 use backend\models\searches\AwTournamentSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

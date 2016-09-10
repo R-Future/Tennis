@@ -6,7 +6,7 @@ use common\models\AwTournament;
 /* @var $this yii\web\View */
 /* @var $model common\models\AwPointType */
 $tournament=AwTournament::findOne($model->tournament);
-$this->title = $model->point_type==0? '小组赛':$model->point_type;
+$this->title = $model->round==0? '小组赛':$model->round;
 $this->params['breadcrumbs'][] = ['label' => $tournament['name'], 'url' => ['tournament/view','id'=>$model->tournament]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'tournament',
-            'point_type',
+            'round',
             'winner_point',
             'loser_point',
             'penalty',

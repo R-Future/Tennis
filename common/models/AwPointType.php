@@ -39,6 +39,7 @@ class AwPointType extends \yii\db\ActiveRecord
             [['tournament', 'round', 'winner_point', 'loser_point','penalty'], 'integer'],
             [['create_at', 'update_at'], 'safe'],
             [['is_invalidated'], 'boolean'],
+            [['penalty'], 'max'=>0],
             [['comment'], 'string', 'max' => 255]
         ];
     }
@@ -68,5 +69,13 @@ class AwPointType extends \yii\db\ActiveRecord
     public function getTournament0()
     {
         return $this->hasOne(AwTournament::className(), ['id' => 'tournament']);
+    }
+
+    /**
+     * @param $tournament_id
+     * @return array
+     */
+    public function getRoundList($tournament_id){
+        return $this::find()->select('round')->where(['tournament'=>$tournament_id])->indexBy('id')->column();
     }
 }

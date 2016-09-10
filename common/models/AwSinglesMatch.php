@@ -12,15 +12,17 @@ use Yii;
  * @property integer $opponent
  * @property string $match_time
  * @property integer $match_place
- * @property string $entry_project
+ * @property integer $entry_project
  * @property string $field_type
  * @property integer $tournament
  * @property integer $round
  * @property integer $sets
  * @property string $scores
- * @property string $win_loss
+ * @property integer $win_loss
  * @property integer $player_point
  * @property integer $opponent_point
+ * @property integer $player_challenger
+ * @property integer $opponent_challenger
  * @property boolean $player_quit
  * @property boolean $opponent_quit
  * @property boolean $is_invalidated
@@ -51,11 +53,15 @@ class AwSinglesMatch extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['player', 'opponent', 'match_place', 'tournament', 'round', 'sets', 'player_point', 'opponent_point'], 'integer'],
-            [['player_quit', 'opponent_quit', 'is_invalidated'],'boolean'],
+            [['player', 'opponent', 'match_place', 'tournament', 'round', 'player_point', 'opponent_point'], 'integer'],
+            [['entry_project'], 'integer', 'max'=>7,'min'=>0],
+            [['win_loss'], 'integer', 'max'=>1,'min'=>-1],
+            [['sets'], 'integer', 'max'=>5, 'min'=>1],
+            [['player_challenger','opponent_challenger','player_quit', 'opponent_quit', 'is_invalidated'],'boolean'],
             [['match_time', 'create_at', 'update_at'], 'safe'],
-            [['entry_project', 'field_type', 'win_loss'], 'string'],
-            [['scores', 'comment'], 'string', 'max' => 255]
+            [['match_time'], 'date', 'format'=>'php:Y-m-d'],
+            [['field_type'], 'string'],
+            [['scores', 'comment'], 'string', 'max' => 255],
         ];
     }
 
@@ -70,17 +76,19 @@ class AwSinglesMatch extends \yii\db\ActiveRecord
             'opponent' => '球员2',
             'match_time' => '比赛时间',
             'match_place' => '比赛地点',
-            'entry_project' => '参赛项目',
+            'entry_project' => '参赛项目（1-男单/2-女单/7-混单）',
             'field_type' => '场地类型',
             'tournament' => '赛事类型',
-            'round' => '轮次',
+            'round' => '轮次（0-小组赛/32-三十二强/16-十六强/8-八强/4-四强/2-决赛）',
             'sets' => '盘数',
             'scores' => '比分',
-            'win_loss' => '胜负',
+            'win_loss' => '胜负（1-胜/-1-负/0-平）',
             'player_point' => '球员1积分',
             'opponent_point' => '球员2积分',
-            'player_quit' => 'player1退赛',
-            'opponent_quit' => 'player2退赛',
+            'player_challenger' => '球员1挑战者',
+            'opponent_challenger' => '球员2挑战者',
+            'player_quit' => '球员1退赛',
+            'opponent_quit' => '球员2退赛',
             'is_invalidated' => '比赛无效',
             'create_at' => '创建时间',
             'update_at' => '更新时间',

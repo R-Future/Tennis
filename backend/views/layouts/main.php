@@ -53,6 +53,10 @@ AppAsset::register($this);
              ['label'=>'女单个人','url'=>['/women-individual-point/index']],
              ['label'=>'双打个人','url'=>['/double-individual-point/index']],
              ['label'=>'双打组合','url'=>['/double-point/index']],
+             ['label'=>'男双组合','url'=>['/men-double-point/index']],
+             ['label'=>'女双组合','url'=>['/women-double-point/index']],
+             ['label'=>'混双组合','url'=>['/mixed-double-point/index']],
+             ['label'=>'个人扣分','url'=>['/deduct-point/index']],
          ]
         ],
         ['label'=>'比赛记录',
@@ -65,10 +69,15 @@ AppAsset::register($this);
         ['label'=>'双打比赛统计', 'url'=>['/match-record/doubles']],
         ['label'=>'积分排名',
          'items'=>[
+            ['label'=>'本赛季单打排名','url'=>['/rank/season-singles-rank']],
+            ['label'=>'本赛季双打个人排名','url'=>['/rank/season-doubles-individual-rank']],
             ['label'=>'单打混合排名','url'=>['/rank/singles-rank']],
             ['label'=>'男单排名','url'=>['/rank/men-rank']],
             ['label'=>'女单排名','url'=>['/rank/women-rank']],
-            ['label'=>'双打排名','url'=>['/rank/doubles-rank']],
+            ['label'=>'男双排名','url'=>['/rank/men-double-rank']],
+            ['label'=>'女双排名','url'=>['/rank/women-double-rank']],
+            ['label'=>'混双排名','url'=>['/rank/mixed-double-rank']],
+            ['label'=>'双打混合排名','url'=>['/rank/doubles-rank']],
             ['label'=>'双打个人排名','url'=>['/rank/doubles-individual-rank']],
          ]
         ],

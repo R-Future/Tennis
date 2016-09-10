@@ -12,11 +12,21 @@ use common\models\AwPlayerInformation;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'player')->dropDownList(AwPlayerInformation::find()->select('name')->indexBy('id')->all()) ?>
+    <?= $form->field($model, 'player')->dropDownList(AwPlayerInformation::find()->select('name')->indexBy('id')->column()) ?>
 
-    <?= $form->field($model, 'rank_type')->dropDownList([ '男单' => '男单', '女单' => '女单', '混单' => '混单', '双打个人' => '双打个人', '双打' => '双打', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'rank_type')->dropDownList([ '男单' => '男单', '女单' => '女单', '混单' => '混单', '双打个人' => '双打个人', '双打' => '双打', ], ['prompt' => '--请选择排名类别--']) ?>
 
     <?= $form->field($model, 'total_points')->textInput() ?>
+
+    <?= $form->field($model, 'current_rank')->textInput() ?>
+
+    <?= $form->field($model, 'rank_lift')->textInput() ?>
+
+    <?= $form->field($model, 'win_matches')->textInput() ?>
+
+    <?= $form->field($model, 'total_matches')->textInput() ?>
+
+    <?= $form->field($model, 'next_week_deduct_point')->textInput() ?>
 
     <?= $form->field($model, 'highest_rank')->textInput() ?>
 
@@ -27,6 +37,12 @@ use common\models\AwPlayerInformation;
     <?= $form->field($model, 'longest_no1_weeks')->textInput() ?>
 
     <?= $form->field($model, 'margin_bureau')->textInput() ?>
+
+    <?= $form->field($model, 'year')->textInput() ?>
+
+    <?= $form->field($model, 'week')->textInput() ?>
+
+    <?= $form->field($model, 'highest_rank_start_at')->textInput() ?>
 
     <?= $form->field($model, 'create_at')->textInput() ?>
 

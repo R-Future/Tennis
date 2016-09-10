@@ -21,6 +21,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'player2') ?>
 
+    <?= $form->field($model, 'team_type') ?>
+
     <?= $form->field($model, 'start_at') ?>
 
     <?= $form->field($model, 'create_at') ?>

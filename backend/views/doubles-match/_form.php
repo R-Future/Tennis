@@ -9,6 +9,16 @@ use common\models\AwTournament;
 /* @var $this yii\web\View */
 /* @var $model common\models\AwDoublesMatch */
 /* @var $form yii\widgets\ActiveForm */
+/**
+ * 男单 -- 1
+ * 女单 -- 2
+ * 男双 -- 3
+ * 女双 -- 4
+ * 混双 -- 5
+ * 双打个人 -- 6
+ * 混单 -- 7
+ * 双打 -- 8
+ * */
 ?>
 
 <div class="aw-doubles-match-form">
@@ -30,7 +40,7 @@ use common\models\AwTournament;
 
     <?= $form->field($model, 'match_place')->dropDownList(AwArena::find()->select('name')->indexBy('id')->column()) ?>
 
-    <?= $form->field($model, 'entry_project')->dropDownList([ '混双' => '混双', '女双' => '女双', '男双' => '男双', ]) ?>
+    <?= $form->field($model, 'entry_project')->dropDownList([ '5' => '混双', '4' => '女双', '3' => '男双', ]) ?>
 
     <?= $form->field($model, 'field_type')->dropDownList([ '硬地' => '硬地', '红土' => '红土', '草地' => '草地',  ]) ?>
 
@@ -42,7 +52,7 @@ use common\models\AwTournament;
 
     <?= $form->field($model, 'scores')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'win_loss')->dropDownList([ '胜' => '胜', '负' => '负', '平' => '平',  ]) ?>
+    <?= $form->field($model, 'win_loss')->dropDownList([ '1' => '胜', '-1' => '负', '0' => '平',  ]) ?>
 
     <?= $form->field($model, 'team1_point')->textInput() ?>
 

@@ -19,7 +19,7 @@ class AwTeamSearch extends AwTeam
     {
         return [
             [['id'], 'integer'],
-            [['player1', 'player2', 'start_at', 'create_at', 'update_at', 'comment'], 'safe'],
+            [['player1', 'player2', 'team_type', 'start_at', 'create_at', 'update_at', 'comment'], 'safe'],
         ];
     }
 
@@ -57,6 +57,7 @@ class AwTeamSearch extends AwTeam
 
         $query->andFilterWhere([
             'id' => $this->id,
+            'team_type' => $this->team_type,
             'start_at' => $this->start_at,
             'create_at' => $this->create_at,
             'update_at' => $this->update_at,
